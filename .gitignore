@@ -4,3 +4,4 @@ local/
 .checksum
 .new-additions
 *.txt
+test-requests/

