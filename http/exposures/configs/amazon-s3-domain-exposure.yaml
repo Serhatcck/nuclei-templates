@@ -3,7 +3,7 @@ id: amazon-s3-domain-exposure
 info:
   name: Amazon S3 Domain Exposure
   author: Serhatcck
-  severity: info
+  severity: low
   description: Dockerrun AWS configuration page was detected.
   metadata:
     max-request: 1
