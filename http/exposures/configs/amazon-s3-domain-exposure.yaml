@@ -1,0 +1,28 @@
+id: amazon-s3-domain-exposure
+
+info:
+  name: Amazon S3 Domain Exposure
+  author: Serhatcck
+  severity: info
+  description: Dockerrun AWS configuration page was detected.
+  metadata:
+    max-request: 1
+  tags: config,exposure,aws,s3
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+
+    extractors:
+      - type: regex
+        name: aws_domains
+        regex:
+          - "([\\w-]+\\.amazonaws\\.com)"
+          - "([\\w-]+\\.s3\\.amazonaws\\.com)"
+          - "([\\w-]+\\.dynamodb\\.amazonaws\\.com)"
+          - "([\\w-]+\\.cloudfront\\.net)"
+          - "([\\w-]+\\.lambda\\.amazonaws\\.com)"
+          - "([\\w-]+\\.elasticbeanstalk\\.com)"
+          - "([\\w-]+\\.api\\.amazonaws\\.com)"
+          - "(s3\\.[a-z-]+\\.amazonaws\\.com)"

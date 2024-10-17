@@ -1,0 +1,118 @@
+id: xff-403-bypass
+
+info:
+  name: X-Forwarded-For 403-forbidden bypass
+  author: vavkamil
+  severity: info
+  description: Template to detect 403 forbidden endpoint bypass behind Nginx/Apache proxy & load balancers, based on X-Forwarded-For header.
+  metadata:
+    max-request: 3
+  tags: fuzz,fuzzing
+
+http:
+  - raw:
+      - |
+        GET / HTTP/1.1
+        Host: {{Hostname}}
+        Accept: */*
+      - |
+        GET / HTTP/1.1
+        Host: {{Hostname}}
+        Accept: */*
+        X-Forwarded-For: 127.0.0.1, 0.0.0.0, 192.168.0.1, 10.0.0.1, 172.16.0.1
+        Client- IP: 127.0.0.1
+        Http-Url: 127.0.0.1
+        Proxy-Host: 127.0.0.1
+        Proxy-Url: 127.0.0.1
+        Real- Ip: 127.0.0.1
+        Redirect: 127.0.0.1
+        Referer: 127.0.0.1
+        Referrer: 127.0.0.1
+        Refferer: 127.0.0.1
+        Request-Uri: 127.0.0.1
+        Uri: 127.0.0.1
+        Url: 127.0.0.1
+        X-Client- IP: 127.0.0.1
+        X- Custom- IP-Authorization: 127.0.0.1
+        X- Forward-For: 127.0.0.1
+        X-Forwarded-By: 127.0.0.1
+        X-Forwarded-For-Original: 127.0.0.1
+        X-Forwarded- For: 127.0.0.1
+        X-Forwarded-Host: 127.0.0.1
+        X- Forwarded-Port: 443
+        X- Forwarded-Port: 4443
+        X-Forwarded-Port: 80
+        X- Forwarded-Port: 8080
+        X- Forwarded-Port: 8443
+        X- Forwarded- Scheme: http
+        X- Forwarded- Scheme: https
+        X- Forwarded-Server: 127.0.0.1
+        X-Forwarded: 127.0.0.1
+        X-Forwarder-For: 127.0.0.1
+        X-Host: 127.0.0.1
+        X-Http-Destinationurl: 127.0.0.
+        X-Http-Host-Override: 127.0.0.1
+        X-Original-Remote-Addr: 127.0. 0.1
+        X-Original-Url: 127.0.0.1
+        X-Originating-IP: 127.0.0.1
+        X-Proxy-Url: 127.0.0.1
+        X-Real- Ip: 127.0.0.1
+        X- Remote-Addr: 127.0.0.1
+        X-Remote- IP: 127.0.0.1
+        X-Rewrite-Url: 127.0.0.1
+        X- True- IP: 127.0.0.1
+      - |
+        GET /test.txt HTTP/1.1
+        Host: {{Hostname}}
+        Accept: */*
+        X-Forwarded-For: 127.0.0.1, 0.0.0.0, 192.168.0.1, 10.0.0.1, 172.16.0.1
+        Base-Url: 127.0.0.1
+        Client- IP: 127.0.0.1
+        Http-Url: 127.0.0.1
+        Proxy-Host: 127.0.0.1
+        Proxy-Url: 127.0.0.1
+        Real- Ip: 127.0.0.1
+        Redirect: 127.0.0.1
+        Referer: 127.0.0.1
+        Referrer: 127.0.0.1
+        Refferer: 127.0.0.1
+        Request-Uri: 127.0.0.1
+        Uri: 127.0.0.1
+        Url: 127.0.0.1
+        X-Client- IP: 127.0.0.1
+        X- Custom- IP-Authorization: 127.0.0.1
+        X- Forward-For: 127.0.0.1
+        X-Forwarded-By: 127.0.0.1
+        X-Forwarded-For-Original: 127.0.0.1
+        X-Forwarded- For: 127.0.0.1
+        X-Forwarded-Host: 127.0.0.1
+        X- Forwarded-Port: 443
+        X- Forwarded-Port: 4443
+        X-Forwarded-Port: 80
+        X- Forwarded-Port: 8080
+        X- Forwarded-Port: 8443
+        X- Forwarded- Scheme: http
+        X- Forwarded- Scheme: https
+        X- Forwarded-Server: 127.0.0.1
+        X-Forwarded: 127.0.0.1
+        X-Forwarder-For: 127.0.0.1
+        X-Host: 127.0.0.1
+        X-Http-Destinationurl: 127.0.0.
+        X-Http-Host-Override: 127.0.0.1
+        X-Original-Remote-Addr: 127.0. 0.1
+        X-Original-Url: 127.0.0.1
+        X-Originating-IP: 127.0.0.1
+        X-Proxy-Url: 127.0.0.1
+        X-Real- Ip: 127.0.0.1
+        X- Remote-Addr: 127.0.0.1
+        X-Remote- IP: 127.0.0.1
+        X-Rewrite-Url: 127.0.0.1
+        X- True- IP: 127.0.0.1
+
+    matchers:
+      - type: dsl
+        dsl:
+          - "status_code_1 == 403 && status_code_2 != 403"
+          - "status_code_1 == 403 && status_code_3 != 403"
+        condition: or
+# digest: 4b0a00483046022100d604fd662fc1f70df85d821c77dc004a6057b4dec83c0987665f26944f7c22ff022100b65077257980c7f5e27827fd59c1dfdede384dfe49cae028c8acd25e187e3e29:922c64590222798bb761d5b6d8e72950
