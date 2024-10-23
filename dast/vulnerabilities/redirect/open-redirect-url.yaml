@@ -1,0 +1,51 @@
+id: open-redirect-url
+
+info:
+  name: Open Redirect Detection
+  author: serhatcck
+  severity: medium
+  metadata:
+    max-request: 1
+  tags: redirect,dast
+
+
+variables:
+  rand_str: "{{randstr}}"
+  rand_url: "{{rand_str}}.com"
+  host_url : "{{Hostname}}"
+  
+
+http:
+  - pre-condition:
+      - type: dsl
+        dsl:
+          - 'method == "GET"'
+
+    payloads:
+      redirect:
+        - "https://{{rand_url}}"
+        - "http://{{rand_url}}"
+        - "//{{rand_url}}"
+        - "https://{{Hostname}}"
+        - "https://{{host_url}}.{{rand_url}}"
+
+
+    fuzzing:
+      - part: query
+        type: postfix
+        mode: single 
+        fuzz:
+          - "{{redirect}}"
+    stop-at-first-match: true
+    matchers-condition: or
+    matchers:
+      - type: regex
+        part: header
+        regex:
+          - '(?m)^(?:Location\s*?:\s*?)(?:https?:\/\/|\/\/|\/\\\\|\/\\)(?:[a-zA-Z0-9\-_\.@]*)oast\.me\/?(\/|[^.].*)?$' # https://regex101.com/r/idfD2e/1
+
+      - type: regex
+        part: body
+        regex : 
+        - '(?m)^.*(?:location\.href\s*?=\s*?)(?:https?:\/\/|\/\/|\/\\\\|\/\\)(?:[a-zA-Z0-9\-_\.@]*){{rand_str}}\.com\/?(\/|[^.].*)?$'
+# digest: 4a0a00473045022100d5d09d72be494c1eb95fd874c9d31cee1ac9e14d7d578419fa0a8298c9f8ca9002202e00bd1843e97bb9160eb898cea0a3301321571d4d65ea7c4bce6b90f9dc82fa:922c64590222798bb761d5b6d8e72950
